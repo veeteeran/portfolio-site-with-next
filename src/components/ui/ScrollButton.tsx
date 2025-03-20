@@ -6,7 +6,7 @@ interface ScrollButtonProps {
   size?: "default" | "sm" | "lg";
   className?: string;
   sectionId?: string;
-  buttonText?: string;
+  children: React.ReactNode;
 }
 
 export default function ScrollButton({
@@ -14,7 +14,7 @@ export default function ScrollButton({
   size = "lg",
   className = "",
   sectionId = "",
-  buttonText = "default",
+  children,
 }: ScrollButtonProps) {
   const handleClick = () => {
     const pageSection = document.getElementById(sectionId);
@@ -30,7 +30,7 @@ export default function ScrollButton({
       onClick={handleClick}
       className={className}
     >
-      {buttonText}
+      {children}
     </Button>
   );
 }
