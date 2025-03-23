@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import ContactSection from "@/components/ContactSection";
 import ScrollButton from "@/components/ui/ScrollButton";
+import { getGithubUrl, getLinkedInUrl } from "@/lib/utils";
 
 export const metadata = {
   title: "Viet Tran | Thoughtful Solutions, Meaningful Impact",
@@ -105,8 +106,8 @@ export default function Home() {
               </div>
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary/20">
                 <Image
-                  src="/api/placeholder/400/400"
-                  alt="John Doe"
+                  src="/images/headshot.jpg"
+                  alt="Viet Tran"
                   fill
                   className="object-cover"
                   priority
@@ -145,7 +146,11 @@ export default function Home() {
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="w-full md:w-1/3">
                 <Avatar className="w-48 h-48 mx-auto">
-                  <AvatarImage src="/api/placeholder/200/200" alt="Viet Tran" />
+                  <AvatarImage
+                    src="/images/headshot.jpg"
+                    alt="Viet Tran"
+                    className="object-cover"
+                  />
                   <AvatarFallback>VT</AvatarFallback>
                 </Avatar>
               </div>
@@ -178,7 +183,13 @@ export default function Home() {
                   When I&apos;m not coding, you&apos;ll likely find me climbing,
                   trying to be a little better today than the day before.
                 </p>
-                <Button>Download Resume</Button>
+                <Link
+                  href="/documents/viet_tran_resume.pdf"
+                  download="Viet_Tran_Resume.pdf"
+                  target="_blank"
+                >
+                  <Button>Download Resume</Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -192,11 +203,11 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p>
-                © {new Date().getFullYear()} YourName.dev. All rights reserved.
+                © {new Date().getFullYear()} Viet Tran. All rights reserved.
               </p>
               <div className="flex space-x-4 mt-4 md:mt-0">
                 <Link
-                  href="https://github.com"
+                  href={getGithubUrl() ?? ""}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-primary"
@@ -204,20 +215,12 @@ export default function Home() {
                   GitHub
                 </Link>
                 <Link
-                  href="https://linkedin.com"
+                  href={getLinkedInUrl() ?? ""}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-primary"
                 >
                   LinkedIn
-                </Link>
-                <Link
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-primary"
-                >
-                  Twitter
                 </Link>
               </div>
             </div>

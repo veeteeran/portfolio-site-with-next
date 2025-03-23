@@ -1,15 +1,8 @@
 "use client";
+import { getGithubUrl, getLinkedInUrl } from "@/lib/utils";
 import { Linkedin, Github } from "lucide-react";
 
 export function SocialLinks() {
-  const getLinkedInUrl = () => {
-    return `https://linkedin.com/in/${process.env.NEXT_PUBLIC_LINKEDIN_USERNAME}`;
-  };
-
-  const getGithubUrl = () => {
-    return `https://github.com/${process.env.NEXT_PUBLIC_GITHUB_USERNAME}`;
-  };
-
   const handleLinkedInClick = () => {
     window.open(getLinkedInUrl(), "_blank", "noopener,noreferrer");
   };
