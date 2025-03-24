@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import ContactSection from "@/components/ContactSection";
 import ScrollButton from "@/components/ui/ScrollButton";
-import { getGithubUrl, getLinkedInUrl } from "@/lib/utils";
+import FooterLinks from "@/components/FooterLinks";
 
 export const metadata = {
   title: "Viet Tran | Thoughtful Solutions, Meaningful Impact",
@@ -205,24 +205,7 @@ export default function Home() {
               <p>
                 © {new Date().getFullYear()} Viet Tran. All rights reserved.
               </p>
-              <div className="flex space-x-4 mt-4 md:mt-0">
-                <Link
-                  href={getGithubUrl() ?? ""}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-primary"
-                >
-                  GitHub
-                </Link>
-                <Link
-                  href={getLinkedInUrl() ?? ""}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-primary"
-                >
-                  LinkedIn
-                </Link>
-              </div>
+              <FooterLinks />
             </div>
           </div>
         </footer>
