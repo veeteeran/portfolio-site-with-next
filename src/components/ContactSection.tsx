@@ -1,3 +1,4 @@
+// src/components/ContactSection.tsx
 "use client";
 import { useState } from "react";
 import { Send, Loader2, CheckCircle } from "lucide-react";
@@ -16,6 +17,8 @@ import { SocialLinks } from "./SocialLinks";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
+const HONEYPOT_FIELD = "website";
+
 export default function ContactSection() {
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -24,30 +27,41 @@ export default function ContactSection() {
     e.preventDefault();
     setFormStatus("submitting");
 
-    const formData = new FormData(e.currentTarget);
-
     try {
-      // Replace with your actual Formspree form ID
-      const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+      const form = e.currentTarget;
+      const formData = new FormData(form);
 
-      const response = await fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        body: formData,
-        headers: {
-          Accept: "application/json",
-        },
-      });
+      const honeypotValue = formData.get(HONEYPOT_FIELD) as string;
+      if (honeypotValue) {
+        console.log("Honeypot triggered - likely a bot");
+        setTimeout(() => {
+          setFormStatus("success");
+          form.reset();
+        }, 1000);
+        return;
+      }
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT}`,
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+
+      const responseData = await response.json();
 
       if (response.ok) {
         setFormStatus("success");
-        e.currentTarget.reset();
+        form.reset();
       } else {
-        const data = await response.json();
-        throw new Error(
-          data.error || "Something went wrong. Please try again."
-        );
+        throw new Error(responseData.error || "Failed to send message");
       }
     } catch (error) {
+      console.error("Error submitting form:", error);
       setFormStatus("error");
       setErrorMessage(
         error instanceof Error ? error.message : "Unknown error occurred"
