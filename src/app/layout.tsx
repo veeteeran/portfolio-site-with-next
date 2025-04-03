@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import BackToTopButton from "@/components/BackToTopButton";
 import { Analytics } from "@vercel/analytics/react";
+import ChatBot from "@/components/chat/ChatBot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,6 +48,7 @@ export default function RootLayout({
         {children}
         <BackToTopButton />
         <Analytics />
+        <ChatBot />
       </body>
     </html>
   );
