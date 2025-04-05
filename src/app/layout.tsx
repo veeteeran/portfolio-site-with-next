@@ -1,9 +1,12 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import BackToTopButton from "@/components/BackToTopButton";
 import { Analytics } from "@vercel/analytics/react";
 import ChatBot from "@/components/chat/ChatBot";
+import { ThemeProvider } from "@/components/ui/theme-provider";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,14 +44,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-        <BackToTopButton />
-        <Analytics />
-        <ChatBot />
+        <ThemeProvider defaultTheme="system" storageKey="viet-theme">
+          <div className="fixed top-4 right-4 z-50">
+            <ThemeToggle />
+          </div>
+          {children}
+          <BackToTopButton />
+          <Analytics />
+          <ChatBot />
+        </ThemeProvider>
       </body>
     </html>
   );
