@@ -24,7 +24,7 @@ export function ThemeToggle() {
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       aria-label="Toggle theme"
-      className="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-200 dark:border-gray-700"
+      className="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-purple-800"
     >
       {theme === "dark" ? (
         <Sun className="h-5 w-5" />
