@@ -1,63 +1,36 @@
 // src/components/ui/theme-toggle.tsx
 "use client";
 
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "./theme-provider";
 import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const [isOverContactSection, setIsOverContactSection] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const checkPosition = () => {
-      const contactSection = document.getElementById("contact");
-      if (!contactSection) return;
-
-      const contactRect = contactSection.getBoundingClientRect();
-      const toggleButton = document.getElementById("theme-toggle-button");
-      if (!toggleButton) return;
-
-      const toggleRect = toggleButton.getBoundingClientRect();
-
-      // Check if the toggle button overlaps with the contact section
-      const isOverlapping =
-        toggleRect.bottom > contactRect.top &&
-        toggleRect.top < contactRect.bottom;
-
-      setIsOverContactSection(isOverlapping);
-    };
-
-    // Check on scroll and on initial load
-    window.addEventListener("scroll", checkPosition);
-    checkPosition();
-
-    return () => {
-      window.removeEventListener("scroll", checkPosition);
-    };
+    setMounted(true);
   }, []);
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <button
-      id="theme-toggle-button"
+    <Button
+      variant="outline"
+      size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className={`
-        rounded-full p-2 transition-colors
-        ${
-          theme === "dark"
-            ? "text-foreground bg-background/10 hover:bg-background/20"
-            : isOverContactSection
-            ? "text-white bg-white/10 hover:bg-white/20"
-            : "text-foreground bg-background/10 hover:bg-background/20"
-        }
-      `}
       aria-label="Toggle theme"
+      className="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-200 dark:border-gray-700"
     >
       {theme === "dark" ? (
         <Sun className="h-5 w-5" />
       ) : (
         <Moon className="h-5 w-5" />
       )}
-    </button>
+    </Button>
   );
 }

@@ -5,7 +5,7 @@ import "./globals.css";
 import BackToTopButton from "@/components/BackToTopButton";
 import { Analytics } from "@vercel/analytics/react";
 import ChatBot from "@/components/chat/ChatBot";
-import { ThemeProvider } from "@/components/ui/theme-provider";
+import { ThemeProvider } from "next-themes";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const geistSans = Geist({
@@ -48,7 +48,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider defaultTheme="system" storageKey="viet-theme">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          storageKey="viet-theme"
+        >
           <div className="fixed top-4 right-4 z-50">
             <ThemeToggle />
           </div>
